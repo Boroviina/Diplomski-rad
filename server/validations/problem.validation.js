@@ -8,12 +8,12 @@ const CreateProblem = {
         city: Joi.string().required(),
         street: Joi.string().required(),
         locationDescription: Joi.string(),
-        contactName: Joi.string(),
-        phoneNumber: Joi.string(),
+        contactName: Joi.string().allow(''),
+        phoneNumber: Joi.string().allow(''),
+        contactEmail: Joi.string().allow(''),
         uri: Joi.array().items(Joi.string()),
         status: Joi.string(),
         searchId: Joi.string().required(),
-        contactEmail: Joi.string()
     })
 }
 
@@ -49,8 +49,9 @@ const UpdateProblem = {
         city: Joi.string().required(),
         street: Joi.string().required(),
         locationDescription: Joi.string(),
-        contactName: Joi.string(),
-        phoneNumber: Joi.string(),
+        contactName: Joi.string().allow(''),
+        phoneNumber: Joi.string().allow(''),
+        contactEmail: Joi.string().allow(''),
         uri: Joi.string(),
         status: Joi.string()
     }).min(1)

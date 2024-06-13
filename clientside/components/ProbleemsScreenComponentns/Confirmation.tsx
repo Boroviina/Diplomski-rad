@@ -40,7 +40,7 @@ Ukoliko zelite da pratite vasu prijavu ovo je vas kod za pretragu: \n${problem.s
                         {text: "Kopiraj kod", onPress: () => copyToClipboard(problem.searchId || '')}
                     ]
                 );
-                navigation.navigate('ReviewProblems');
+                navigation.navigate('StartScreen');
             })
             .catch((error) => {
                 Alert.alert("Greska", "Doslo je do greske prilikom prijave problema")

@@ -3,7 +3,7 @@ import {ProblemModel} from "../models/problems.model";
 
 const PROBLEMS_ENDPOINT = 'problems';
 
-export const getProblems = (): Promise<ProblemModel[] | null> => {
+export const getProblems = (): Promise<ProblemModel[] | undefined> => {
     return Api.get(PROBLEMS_ENDPOINT)
         .then(response =>response.data)
         .then(data=>data.results.map((problem: any)=>new ProblemModel(problem)))

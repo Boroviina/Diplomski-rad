@@ -12,6 +12,7 @@ import {AuthInit, AuthProvider, useAuth} from "./shared/contexts/auth-context";
 import {RootStackParamsList} from "./types/types";
 import ReviewScreen from "./screens/ReviewScreen";
 import {Colors} from "./constants/Colors";
+import DetailsScreen from "./screens/DetailsScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamsList>();
 
@@ -34,7 +35,13 @@ function AuthentificationScreens() {
                     headerTintColor: Colors.primary100
                 }
                 }/>
-                <Stack.Screen name={'ReviewProblems'} component={ReviewScreen}/>
+                <Stack.Screen name={'ReviewProblems'} component={ReviewScreen} options={{
+                    title: "Pregled prijava",
+                    headerStyle: {backgroundColor: Colors.primary700},
+                    headerTintColor: Colors.primary100
+                }}
+                />
+                <Stack.Screen name={'DetailsScreen'} component={DetailsScreen}/>
             </>}
         </Stack.Navigator>
     )
