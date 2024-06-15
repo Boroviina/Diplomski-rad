@@ -21,7 +21,8 @@ const initAuthContextPropsState = {
     setCurrentUser: () => {
     },
     logout: () => {
-    }
+    },
+    state: "guest"
 }
 
 const AuthContext = createContext<AuthContextProps>(initAuthContextPropsState);

@@ -23,7 +23,11 @@ function AuthentificationScreens() {
 
     return (<Stack.Navigator>
             {auth ? <>
-                <Stack.Screen name={'Revision'} component={Reviosion}/>
+                <Stack.Screen name={'Revision'} component={Reviosion} options={{
+                    title: "Pristigle prijave",
+                    headerStyle: {backgroundColor: Colors.primary700},
+                    headerTintColor: Colors.primary100
+                }}/>
             </> : <>
                 <Stack.Screen name='StartScreen' component={StartScreen}/>
                 <Stack.Screen name='Login' component={LoginScreen}/>
@@ -41,7 +45,11 @@ function AuthentificationScreens() {
                     headerTintColor: Colors.primary100
                 }}
                 />
-                <Stack.Screen name={'DetailsScreen'} component={DetailsScreen}/>
+                <Stack.Screen name={'DetailsScreen'} component={DetailsScreen} options={{
+                    title: "Detalji prijave",
+                    headerStyle: {backgroundColor: Colors.primary700},
+                    headerTintColor: Colors.primary100
+                }}/>
             </>}
         </Stack.Navigator>
     )

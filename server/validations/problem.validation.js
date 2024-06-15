@@ -30,6 +30,7 @@ const GetProblems = {
         sortBy: Joi.string(),
         limit: Joi.number().integer(),
         page: Joi.number().integer(),
+        answer: Joi.string().allow('')
     })
 }
 
@@ -53,7 +54,8 @@ const UpdateProblem = {
         phoneNumber: Joi.string().allow(''),
         contactEmail: Joi.string().allow(''),
         uri: Joi.string(),
-        status: Joi.string()
+        status: Joi.string(),
+        answer: Joi.string().allow('')
     }).min(1)
 }
 

@@ -3,18 +3,24 @@ import {Colors} from "../../constants/Colors";
 import {FC} from "react";
 import PhotoButton from "../ProbleemsScreenComponentns/UI/PhotoButton";
 import {useNavigation} from "@react-navigation/native";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {RootStackParamsList} from "../../types/types";
+import Status from "./Status";
 
 type props = {
     title: string | undefined;
     image: string | undefined;
     status: string | undefined;
+    id: string | undefined;
 }
-const ProblemLog: FC<props> = ({title, image, status}) => {
+const ProblemLog: FC<props> = ({title, image, status, id}) => {
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamsList>>();
 
     function seeDetailsHandelr() {
-        navigation.navigate('DetailsScreen' as never);
+        navigation.navigate('DetailsScreen',{
+            detailId: id
+        });
     }
 
     return <View style={styles.root}>
@@ -23,8 +29,9 @@ const ProblemLog: FC<props> = ({title, image, status}) => {
         </View>
         <View style={styles.detailsContainer}>
             <Text style={[styles.title, {fontSize: 18, fontWeight: "bold"}]}>{title}</Text>
+            <Status status={status} fontSize={16} iconSize={16}/>
             <View style={styles.statusContainer}>
-                <Text style={styles.statusText}>{status}</Text>
+
                 <Pressable onPress={seeDetailsHandelr} style={styles.button}>
                     <View>
                         <Text style={{color: Colors.primary100}}>Vidi detalje</Text>
@@ -44,7 +51,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginVertical: 8,
         marginHorizontal: 10,
-        height: 140,
+        height: 150,
         borderStyle: "solid",
         borderColor: Colors.primary700,
         borderBottomWidth: 3,
@@ -69,13 +76,15 @@ const styles = StyleSheet.create({
         paddingVertical: 10
     },
     statusContainer: {
-        justifyContent: "space-between",
+        justifyContent: "flex-end",
         flexDirection: "row",
         alignItems: "center"
     },
     title: {
         color: Colors.primary700,
-        fontSize: 16
+        fontSize: 14,
+        padding:4,
+        marginVertical:5
     },
     image: {
         width: '100%',

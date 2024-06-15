@@ -8,51 +8,29 @@ import {ProblemProvider} from "../shared/contexts/problem-context";
 import {getProblems} from "../shared/services/problems.service";
 import {ProblemModel} from "../shared/models/problems.model";
 import {ProblemType} from "../shared/enums/problemType.enum";
+import FilterComponent from "../components/ReviewProblemComponents/FilterComponent";
+import {Colors} from "../constants/Colors";
+import RewiewComponent from "../components/ReviewProblemComponents/RewiewComponent";
 
 
 type ReviewScreenProps = NativeStackScreenProps<RootStackParamsList, 'ReviewProblems'>
 
 const ReviewScreen: FC<ReviewScreenProps> = ({navigation}) => {
-    const [problems, setProblems] = useState<ProblemModel[] | undefined>();
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await getProblems();
-            console.log("Ovo su podaci ", data);
-            setProblems(data);
-
-        }
-        fetchData();
-
-    }, [])
-
-    function getProblemTypeName(type: ProblemType | undefined) {
-        return type ? ProblemType[type as unknown as keyof typeof ProblemType] : undefined;
-    }
-
-    return <ProblemProvider>
-        <View>
-            <Text>Ovdje ce biti filter za pretragu</Text>
-        </View>
-        <View>
-            {problems ? (
-                problems.map((problem) => (
-                    <ProblemLog key={problem.id} title={getProblemTypeName(problem.problemType)}
-                                image={(problem.uri && problem.uri[0]) || undefined}
-                                status={problem.status || undefined}/>
-                ))
-            ) : (
-                <Text>Ucitavanje...</Text>
-            )}
-        </View>
-
-    </ProblemProvider>
+    return <RewiewComponent/>
 }
 
 export default ReviewScreen;
 
-const styles=StyleSheet.create({
-    filterContainer:{
-
+const styles = StyleSheet.create({
+    mainContainer:{
+        flex:1,
+        flexDirection: "column",
+        backgroundColor: Colors.primary50,
+    },
+    filterContainer: {
+        flex: 1
+    },
+    listContainer: {
+        flex: 7,
     }
 })

@@ -5,5 +5,5 @@ export type RootStackParamsList={
     ReportProblem:undefined;
     Revision: undefined;
     ReviewProblems: undefined;
-    DetailsScreen: undefined;
+    DetailsScreen: { detailId: string | undefined };
 }

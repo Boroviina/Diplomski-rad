@@ -16,6 +16,8 @@ export class ProblemModel extends BaseModel {
     status?: ProblemStatus;
     searchId?: string;
     contactEmail?: string;
+    answer?: string;
+    createdAt?: Date;
 
     constructor(attributes?: any) {
         super();

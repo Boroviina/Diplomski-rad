@@ -45,6 +45,10 @@ const ProblemsSchema = mongoose.Schema({
     searchId: {
         type: String,
         required: true
+    },
+    answer: {
+        type: String,
+        default: ''
     }
 }, {
     timestamps: true,

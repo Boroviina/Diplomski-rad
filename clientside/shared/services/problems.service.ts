@@ -9,7 +9,7 @@ export const getProblems = (): Promise<ProblemModel[] | undefined> => {
         .then(data=>data.results.map((problem: any)=>new ProblemModel(problem)))
 }
 
-export const getProblem=(problemId:string):Promise<ProblemModel|null>=>{
+export const getProblem=(problemId:string|undefined):Promise<ProblemModel|undefined>=>{
     return Api.get(`${PROBLEMS_ENDPOINT}/${problemId}`)
         .then(response=>response.data)
         .then(data=>new ProblemModel(data));
