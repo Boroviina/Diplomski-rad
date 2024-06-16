@@ -8,15 +8,7 @@ const verifyCallback = (req, resolve, reject, requiredRights) => async (err, use
     if (err || info || !user) {
         return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate'));
     }
-
-    if (user.role === 'guest') {
-        req.user = {
-            id: user.sub,
-            role: 'guest'
-        }
-    }else {
-        req.user=user;
-    }
+    req.user = user;
     if (requiredRights.length) {
         const userRights = roleRights.get(user.role);
         const hasRequiredRights = requiredRights.every((requiredRight) => userRights.includes(requiredRight));
@@ -24,6 +16,7 @@ const verifyCallback = (req, resolve, reject, requiredRights) => async (err, use
             return reject(new ApiError(httpStatus.FORBIDDEN, "Forbbiden"));
         }
     }
+
     resolve();
 };
 

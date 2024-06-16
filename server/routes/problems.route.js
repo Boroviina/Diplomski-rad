@@ -3,6 +3,7 @@ const router = express.Router();
 const problemController = require('../controllers/problems.controller');
 const validate = require('../config/validate');
 const problemValidation = require('../validations/problem.validation')
+const auth=require('../config/middleware/auth');
 
 router.route('/')
     .post(validate(problemValidation.CreateProblem), problemController.createProblem)
@@ -10,7 +11,7 @@ router.route('/')
 
 router.route('/:problemId')
     .get(validate(problemValidation.GetProblem), problemController.getProblem)
-    .put(validate(problemValidation.UpdateProblem), problemController.updateProblem)
-    .delete(validate(problemValidation.deleteProblem), problemController.deleteProblem)
+    .put(auth('updateProblem'), validate(problemValidation.UpdateProblem), problemController.updateProblem)
+    .delete(auth('deleteProblem'), validate(problemValidation.deleteProblem), problemController.deleteProblem)
 
 module.exports = router;

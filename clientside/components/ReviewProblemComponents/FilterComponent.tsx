@@ -1,6 +1,7 @@
 import {Button, Pressable, StyleSheet, Text, TextInput, View} from "react-native";
 import {Colors} from "../../constants/Colors";
 import {FC} from "react";
+import SeeDetailsButton from "./SeeDetailsButton";
 
 type props = {
     value: string,
@@ -16,11 +17,10 @@ const FilterComponent: FC<props> = ({value, onChangeText, onPress}) => {
                    value={value}
                    onChangeText={onChangeText}
         />
-        <Pressable onPress={onPress} style={styles.button}>
-            <View>
-                <Text style={{color: Colors.primary100, fontWeight: "bold"}}>Pretraži</Text>
-            </View>
-        </Pressable>
+        <View style={styles.buttonContainer}>
+            <SeeDetailsButton onPress={onPress} label={"Pretraži"}/>
+        </View>
+
     </View>
 }
 
@@ -49,6 +49,12 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 14
     },
+    buttonContainer: {
+        flex: 2,
+        height: '100%',
+        justifyContent: "center",
+        alignItems: "center"
+    },
     button: {
         backgroundColor: Colors.primary700,
         padding: 5,
@@ -57,6 +63,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         flex: 2,
-        height:'100%'
+        height: '100%'
     }
 })

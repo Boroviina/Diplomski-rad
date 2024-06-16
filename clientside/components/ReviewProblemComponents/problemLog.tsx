@@ -6,6 +6,8 @@ import {useNavigation} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {RootStackParamsList} from "../../types/types";
 import Status from "./Status";
+import SeeDetailsButton from "./SeeDetailsButton";
+import {useAuth} from "../../shared/contexts/auth-context";
 
 type props = {
     title: string | undefined;
@@ -14,13 +16,20 @@ type props = {
     id: string | undefined;
 }
 const ProblemLog: FC<props> = ({title, image, status, id}) => {
-
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamsList>>();
+    const {auth}=useAuth();
 
     function seeDetailsHandelr() {
-        navigation.navigate('DetailsScreen',{
-            detailId: id
-        });
+        if (auth){
+            navigation.navigate('AuthDetailScreen', {
+                detailId: id
+            })
+        }else {
+            navigation.navigate('DetailsScreen',{
+                detailId: id
+            });
+        }
+
     }
 
     return <View style={styles.root}>
@@ -28,15 +37,12 @@ const ProblemLog: FC<props> = ({title, image, status, id}) => {
             <Image src={image} style={styles.image}/>
         </View>
         <View style={styles.detailsContainer}>
-            <Text style={[styles.title, {fontSize: 18, fontWeight: "bold"}]}>{title}</Text>
+            <Text style={[styles.title, {fontSize: 17, fontWeight: "bold"}]}>{title}</Text>
             <Status status={status} fontSize={16} iconSize={16}/>
             <View style={styles.statusContainer}>
-
-                <Pressable onPress={seeDetailsHandelr} style={styles.button}>
-                    <View>
-                        <Text style={{color: Colors.primary100}}>Vidi detalje</Text>
-                    </View>
-                </Pressable>
+                <View style={{width:'50%'}}>
+                    <SeeDetailsButton onPress={seeDetailsHandelr} label={'Vidi detalje'}/>
+                </View>
             </View>
         </View>
     </View>
@@ -51,7 +57,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginVertical: 8,
         marginHorizontal: 10,
-        height: 150,
+        height: 165,
         borderStyle: "solid",
         borderColor: Colors.primary700,
         borderBottomWidth: 3,
@@ -72,35 +78,26 @@ const styles = StyleSheet.create({
         paddingHorizontal: 4,
         flexDirection: "column",
         justifyContent: "space-between",
-        height: '95%',
         paddingVertical: 10
     },
     statusContainer: {
         justifyContent: "flex-end",
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        width: '100%',
+        flex:2,
+        padding: 2,
     },
     title: {
         color: Colors.primary700,
         fontSize: 14,
         padding:4,
-        marginVertical:5
+        flex:2,
     },
     image: {
         width: '100%',
         height: '100%',
         borderRadius: 12
     },
-    statusText: {
-        color: Colors.primary700,
-        fontWeight: "bold"
-    },
-    button: {
-        backgroundColor: Colors.primary700,
-        padding: 5,
-        borderRadius: 12,
-        width: '50%',
-        justifyContent: "center",
-        alignItems: "center"
-    }
+
 })

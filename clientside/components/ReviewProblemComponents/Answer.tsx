@@ -1,12 +1,13 @@
-import {FC, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import {Pressable, StyleSheet, Text, TextInput, View} from "react-native";
 import {Colors} from "../../constants/Colors";
 
 type props = {
     answer: string | undefined;
     searchKey: string | undefined;
+    detailId: string;
 }
-const Answer: FC<props> = ({answer, searchKey}) => {
+const Answer: FC<props> = ({answer, searchKey, detailId}) => {
     const [code, setCode] = useState('');
     const [showAnswer, setShowAnswer] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -20,12 +21,13 @@ const Answer: FC<props> = ({answer, searchKey}) => {
         }
     }
 
+
     let problemAnswer;
     if (showAnswer) {
         if (answer)
             problemAnswer = <Text style={styles.answerText}>{answer}</Text>
         else {
-            problemAnswer=<Text style={styles.answerText}>Još niste dobili odgovor!</Text>
+            problemAnswer = <Text style={styles.answerText}>Još niste dobili odgovor!</Text>
         }
     } else {
         problemAnswer = <View style={styles.root}>
@@ -43,11 +45,13 @@ const Answer: FC<props> = ({answer, searchKey}) => {
         </View>
     }
 
+
     return <View style={{flex: 1}}>
         <Text style={styles.title}>Odgovor:</Text>
         {problemAnswer}
     </View>
 }
+
 
 export default Answer;
 
@@ -91,6 +95,19 @@ const styles = StyleSheet.create({
     answerText: {
         color: Colors.primary700,
         fontSize: 17,
-
+    },
+    answerInput: {
+        backgroundColor: Colors.primary200,
+        borderRadius: 12,
+        marginVertical: 8,
+        color: Colors.primary700,
+        padding: 8,
+        fontSize: 16,
+    },
+    buttonContainer: {
+        height: 40
+    },
+    answerContainer: {
+        marginVertical: 10
     }
 })

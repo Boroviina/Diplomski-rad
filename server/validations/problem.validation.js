@@ -45,15 +45,6 @@ const UpdateProblem = {
         problemId: Joi.required().custom(objectID)
     }),
     body: Joi.object().keys({
-        problemType: Joi.string(),
-        description: Joi.string().required(),
-        city: Joi.string().required(),
-        street: Joi.string().required(),
-        locationDescription: Joi.string(),
-        contactName: Joi.string().allow(''),
-        phoneNumber: Joi.string().allow(''),
-        contactEmail: Joi.string().allow(''),
-        uri: Joi.string(),
         status: Joi.string(),
         answer: Joi.string().allow('')
     }).min(1)

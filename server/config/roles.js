@@ -1,6 +1,5 @@
 const allRoles={
-    user:[''],
-    guest:['']
+    user:['updateProblem', 'deleteProblem'],
 };
 
 const roles=Object.keys(allRoles);      //array ['user', 'admin']

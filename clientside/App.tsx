@@ -13,6 +13,7 @@ import {RootStackParamsList} from "./types/types";
 import ReviewScreen from "./screens/ReviewScreen";
 import {Colors} from "./constants/Colors";
 import DetailsScreen from "./screens/DetailsScreen";
+import AuthDetailScreen from "./screens/AuthDetailScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamsList>();
 
@@ -25,6 +26,11 @@ function AuthentificationScreens() {
             {auth ? <>
                 <Stack.Screen name={'Revision'} component={Reviosion} options={{
                     title: "Pristigle prijave",
+                    headerStyle: {backgroundColor: Colors.primary700},
+                    headerTintColor: Colors.primary100
+                }}/>
+                <Stack.Screen name={'AuthDetailScreen'} component={AuthDetailScreen} options={{
+                    title: "Detalji prijave",
                     headerStyle: {backgroundColor: Colors.primary700},
                     headerTintColor: Colors.primary100
                 }}/>

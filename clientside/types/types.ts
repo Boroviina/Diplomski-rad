@@ -1,9 +1,12 @@
-export type RootStackParamsList={
+import AuthDetailScreen from "../screens/AuthDetailScreen";
+
+export type RootStackParamsList = {
     StartScreen: undefined;
     Login: undefined;
     SignUp: undefined;
-    ReportProblem:undefined;
+    ReportProblem: undefined;
     Revision: undefined;
     ReviewProblems: undefined;
-    DetailsScreen: { detailId: string | undefined };
+    DetailsScreen: { detailId: string };
+    AuthDetailScreen: { detailId: string  };
 }

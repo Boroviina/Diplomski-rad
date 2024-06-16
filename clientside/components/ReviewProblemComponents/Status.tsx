@@ -31,11 +31,6 @@ function getStatusIcon(status: string | undefined) {
 const Status: FC<props> = ({status, fontSize, iconSize}) => {
     const icon = getStatusIcon(status);
 
-    useEffect(()=>{
-        console.log(icon);
-        console.log(ProblemStatus.obradaUToku)
-    },[])
-
 
     return <View style={styles.root}>
         <Text style={[styles.text, {fontSize}]}>{getEnumValueByKey(ProblemStatus, status)}</Text>
@@ -47,10 +42,11 @@ export default Status;
 
 const styles = StyleSheet.create({
     root: {
-        flex: 1,
         flexDirection: "row",
         justifyContent: "flex-end",
-        alignItems: "center"
+        alignItems: "center",
+        flex: 1,
+        marginVertical: 10,
     },
     text: {
         color: Colors.primary700,

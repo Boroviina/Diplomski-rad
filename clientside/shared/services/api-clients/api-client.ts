@@ -16,7 +16,7 @@ const put = (endpoint: string, body: any, query: string = ''): Promise<AxiosResp
     return axiosInstance.put(`${endpoint}${query}`, body);
 }
 const patch = (endpoint: string, body: any, query: string = ''): Promise<AxiosResponse> => {
-    return axiosInstance.patch(`${endpoint}${query}`, body);
+    return axiosInstance.put(`${endpoint}${query}`, body);
 }
 const remove=(endpoint: string, query?: string):Promise<AxiosResponse>=>{
     return axiosInstance.delete(`${endpoint}${query}`);
