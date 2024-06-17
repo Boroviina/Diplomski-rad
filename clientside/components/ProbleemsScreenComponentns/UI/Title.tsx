@@ -1,5 +1,6 @@
 import {Text, View, StyleSheet} from "react-native";
 import {ReactNode, FC} from "react";
+import {Colors} from "../../../constants/Colors";
 
 type props = {
     children: ReactNode
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     text: {
-        color: 'white',
+        color: Colors.primary700,
         fontWeight: "bold",
         fontSize: 24,
         textAlign: "center"

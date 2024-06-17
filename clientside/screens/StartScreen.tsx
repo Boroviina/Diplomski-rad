@@ -21,10 +21,20 @@ const StartScreen= () => {
     }
 
     return <View style={styles.root}>
-        <StartButton onPress={onPressGuestHandler} text={"Prijavi problem"}/>
-        <StartButton onPress={onPressReviewHandler} text={"Pregledaj postojece prijave"}/>
-        <Text style={styles.text}>Prijava za zaposlene</Text>
-        <StartButton onPress={onPressLoginHandler} text={"Prijavi se"}/>
+        <View style={styles.titleContainer}>
+            <Text style={styles.title}>Jednostavno prijavite Vaš problem.</Text>
+        </View>
+
+
+        <View style={styles.buttonContainer}>
+            <StartButton onPress={onPressGuestHandler} text={"Prijavi problem"}/>
+            <Text style={[styles.text, {marginVertical: 5}]}>ili</Text>
+            <StartButton onPress={onPressReviewHandler} text={"Pregledaj postojeće prijave"}/>
+            <View style={styles.prijava}>
+                <Text style={styles.text}>Prijava za zaposlene</Text>
+                <StartButton onPress={onPressLoginHandler} text={"Prijavi se"}/>
+            </View>
+        </View>
     </View>
 }
 
@@ -42,6 +52,33 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 14,
         fontWeight: "bold",
-        marginVertical: 14
+        marginVertical: 18,
+        color: Colors.primary700
+    },
+    titleContainer:{
+        flex: 2,
+        justifyContent: "center",
+        alignItems:"center",
+        marginTop: 50
+    },
+    title:{
+      textAlign:"center",
+        color: Colors.primary700,
+        fontSize:24
+    },
+    buttonContainer:{
+        flex: 7,
+        justifyContent:"flex-start",
+        alignItems: "center",
+        paddingTop: 50
+    },
+    prijava:{
+        borderWidth: 1,
+        borderRadius:16,
+        borderColor:Colors.primary700,
+        justifyContent:"center",
+        alignItems:"center",
+        padding:10,
+        marginTop:10
     }
 })

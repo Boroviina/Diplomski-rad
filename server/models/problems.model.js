@@ -40,7 +40,7 @@ const ProblemsSchema = mongoose.Schema({
     status: {
         type: String,
         enum: problemStatus,
-        default: 'primljeno'
+        default: 'obradaUToku'
     },
     searchId: {
         type: String,

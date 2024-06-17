@@ -35,6 +35,7 @@ const Answer: FC<props> = ({answer, searchKey, detailId}) => {
             <TextInput style={styles.input}
                        value={code}
                        onChangeText={setCode}
+                       cursorColor={Colors.primary700}
             />
             {error && <Text style={styles.text}>{error}</Text>}
             <Pressable onPress={showAnswerHandler} style={styles.button}>
@@ -74,8 +75,13 @@ const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: Colors.primary200,
-        padding: 5,
-        width: '80%'
+        padding: 8,
+        width: '80%',
+        borderRadius: 16,
+        fontSize:16,
+        color: Colors.primary700,
+        fontWeight: "bold",
+        textAlign: "center"
     },
     button: {
         backgroundColor: Colors.primary700,

@@ -22,9 +22,9 @@ const ReportProblemScreen = () => {
     switch (currentStep){
         case 1: card = <ChooseOption onConfirm={goToNextStep}/>
             break;
-        case 2: card = <DescribeProblem onConfirm={goToNextStep} onBack={goToPreviousStep}/>
+        case 2: card = <AddAddress onConfirm={goToNextStep} onBack={goToPreviousStep}/>
             break;
-        case 3: card = <AddAddress onConfirm={goToNextStep} onBack={goToPreviousStep}/>
+        case 3: card = <DescribeProblem onConfirm={goToNextStep} onBack={goToPreviousStep}/>
             break;
         case 4: card = <Contact onConfirm={goToNextStep} onBack={goToPreviousStep}/>
             break;
@@ -42,7 +42,7 @@ export default ReportProblemScreen;
 
 const styles = StyleSheet.create({
     root: {
-        backgroundColor: Colors.primary200,
+        backgroundColor: Colors.primary50,
         flex: 1,
         height: '100%'
     },

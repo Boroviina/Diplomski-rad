@@ -1,5 +1,6 @@
 import {Text, View, StyleSheet} from "react-native";
 import {ReactNode, FC} from "react";
+import {Colors} from "../../../constants/Colors";
 
 type props = {
     children: ReactNode
@@ -18,9 +19,9 @@ const styles=StyleSheet.create({
         marginTop: 40
     },
     text1: {
-        color: 'white',
+        color: Colors.primary700,
         textAlign: "center",
-        fontSize: 16
+        fontSize: 16,
     },
 })
 

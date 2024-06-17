@@ -3,6 +3,7 @@ import {FC, useEffect, useState} from "react";
 import {Colors} from "../../constants/Colors";
 import SeeDetailsButton from "./SeeDetailsButton";
 import {getProblem, updateProblem} from "../../shared/services/problems.service";
+import {formatDate} from "../../constants/formatDate";
 
 type props = {
     answer: string | undefined;
@@ -19,11 +20,11 @@ const AuthAnswer: FC<props> = ({answer, detailId}) => {
     async function sendAnswer() {
         await updateProblem(detailId, {answer: answerValue});
         Alert.alert("Odgovor poslat!");
-        if (edit){
+        if (edit) {
             setEdit(false);
             setEditSent(true);
             setNewValue(answerValue);
-        }else {
+        } else {
             setNewValue(answerValue);
         }
 
@@ -57,9 +58,9 @@ const AuthAnswer: FC<props> = ({answer, detailId}) => {
     if ((answer && answer.length > 0) || newValue) {
         if (editSent) {
             display = <>
-            <View style={styles.answerContainer}>
-                <Text style={styles.answerText}>{newValue}</Text>
-            </View>
+                <View style={styles.answerContainer}>
+                    <Text style={styles.answerText}>{newValue}</Text>
+                </View>
                 <View style={styles.buttonContainer}>
                     <SeeDetailsButton onPress={editAnswer} label={'Izmijeni odgovor'}/>
                 </View>
@@ -143,10 +144,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.6)',
         padding: 15
     },
-    answerContainer:{
+    answerContainer: {
         paddingVertical: 10,
         marginVertical: 10,
         justifyContent: "flex-start",
 
+    },
+    dateContainer: {
+        justifyContent: "space-between",
+        flexDirection: "row",
+        alignItems: "center"
     }
 })

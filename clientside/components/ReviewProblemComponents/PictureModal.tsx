@@ -1,6 +1,6 @@
 import {Image, Modal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {FC} from "react";
-import {ResizeMode} from "expo-av";
+import {ResizeMode, Video} from "expo-av";
 import VideoPlayer from 'expo-video-player';
 
 type props = {
@@ -24,15 +24,17 @@ const PictureModal: FC<props> = ({uri, visible, onClose}) => {
                     <VideoPlayer
                         videoProps={{
                             source: {uri},
-                            resizeMode: ResizeMode.CONTAIN,
-                            shouldPlay: true,
-                            useNativeControls: true,
                             isMuted: true,
-                            videoStyle: {
-                                backfaceVisibility: "hidden",
-                                backgroundColor: 'rgba(255,255,255,0.9)'
-                            }
                         }}
+                        defaultControlsVisible={true}
+                        timeVisible={true}
+                        slider={{visible: true}}
+                        style={{controlsBackgroundColor: 'rgba(255,255,255,0.5)',
+                            videoBackgroundColor: 'rgba(255,255,255,0.8)',
+                            width: 300,
+                            height: 500
+                    }}
+                        autoHidePlayer={true}
                     />
                 </View>
 
@@ -56,12 +58,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(255,255,255,0.6)',
     },
-    modalVideo:{
-        width: '80%',
+    modalVideo: {
+        width: '90%',
         height: '50%',
         justifyContent: "center",
         alignItems: "center",
-        marginVertical:20
+        marginVertical: 20
     },
     modalImage: {
         width: '80%',

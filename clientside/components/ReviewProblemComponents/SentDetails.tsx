@@ -1,11 +1,12 @@
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 import {ProblemType} from "../../shared/enums/problemType.enum";
 import {Colors} from "../../constants/Colors";
-import {FC, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import {ProblemModel} from "../../shared/models/problems.model";
 import PressableImage from "./PressableImage";
 import {Video} from "expo-av";
 import PictureModal from "./PictureModal";
+import {formatDate} from "../../constants/formatDate";
 
 type props = {
     details: ProblemModel | undefined
@@ -33,8 +34,7 @@ const SentDetails: FC<props> = ({details}) => {
                         <Video
                             source={{uri}}
                             style={styles.image}
-                            useNativeControls
-                            isLooping
+                            isMuted={true}
                         />
                     </View>
                 </Pressable>
@@ -57,10 +57,18 @@ const SentDetails: FC<props> = ({details}) => {
         setIsModalVisible(true);
     }
 
+
     return <View style={{flex: 1}}>
-        <Text style={styles.title}>Poslati podaci:</Text>
+        <View style={styles.dateContainer}>
+            <Text style={[styles.title, {flex: 1}]}>Poslati podaci:</Text>
+            <Text style={[styles.title, {flex: 1, textAlign: 'right'}]}>{formatDate(details?.createdAt?.toString())}</Text>
+        </View>
         <Text
-            style={styles.text}>{details?.problemType ? getEnumValueByKey(ProblemType, details.problemType) : "Tip nije definisan"}</Text>
+            style={[styles.text, {
+                fontWeight: 'bold',
+                fontSize: 18
+            }]}>{details?.problemType ? getEnumValueByKey(ProblemType, details.problemType) : "Tip nije definisan"}</Text>
+        <Text></Text>
         <Text style={styles.text}>{details?.description}</Text>
         <Text style={styles.header}>Adresa</Text>
         <Text style={styles.text}>{details?.city}</Text>
@@ -76,6 +84,9 @@ const SentDetails: FC<props> = ({details}) => {
         {selectedImageUri && (
             <PictureModal uri={selectedImageUri} visible={isModalVisible} onClose={closeModal}/>)
         }
+
+        <Text></Text>
+
     </View>
 }
 export default SentDetails;
@@ -92,7 +103,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: Colors.primary700,
-        fontSize: 16,
+        fontSize: 17,
         paddingVertical: 1
     },
     header: {
@@ -121,8 +132,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     image: {
-        width: '100%',
-        height: '100%',
+        width: 80,
+        height: 80,
     },
     pressable: {
         width: '21%',
@@ -132,4 +143,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    dateContainer: {
+        justifyContent: "space-between",
+        flexDirection: "row",
+        alignItems: "center"
+    }
 })

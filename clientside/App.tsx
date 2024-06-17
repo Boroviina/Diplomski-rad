@@ -1,5 +1,5 @@
 import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, Text, View} from 'react-native';
+import {Button, Pressable, StyleSheet, Text, View} from 'react-native';
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {NavigationContainer} from "@react-navigation/native";
 
@@ -14,47 +14,54 @@ import ReviewScreen from "./screens/ReviewScreen";
 import {Colors} from "./constants/Colors";
 import DetailsScreen from "./screens/DetailsScreen";
 import AuthDetailScreen from "./screens/AuthDetailScreen";
+import LogoutButton from "./components/ReviewProblemComponents/logoutButton";
+import EntryScreen from "./screens/EntryScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamsList>();
 
 
 function AuthentificationScreens() {
-    const {auth} = useAuth();
+    const {auth, logout} = useAuth();
 
 
-    return (<Stack.Navigator>
+    return (<Stack.Navigator screenOptions={{
+            headerStyle: {backgroundColor: Colors.primary700},
+            headerTintColor: Colors.primary100
+        }}>
             {auth ? <>
                 <Stack.Screen name={'Revision'} component={Reviosion} options={{
                     title: "Pristigle prijave",
-                    headerStyle: {backgroundColor: Colors.primary700},
-                    headerTintColor: Colors.primary100
+                    headerRight: () => (
+                        <LogoutButton logout={logout}/>
+                    )
                 }}/>
                 <Stack.Screen name={'AuthDetailScreen'} component={AuthDetailScreen} options={{
                     title: "Detalji prijave",
-                    headerStyle: {backgroundColor: Colors.primary700},
-                    headerTintColor: Colors.primary100
                 }}/>
             </> : <>
-                <Stack.Screen name='StartScreen' component={StartScreen}/>
-                <Stack.Screen name='Login' component={LoginScreen}/>
-                <Stack.Screen name='SignUp' component={SignUpScreen}/>
+                <Stack.Screen name={'EntryScreen'} component={EntryScreen} options={{
+                    headerShown: false
+                }}/>
+                <Stack.Screen name='StartScreen' component={StartScreen} options={{
+                    title: ''
+                }}/>
+                <Stack.Screen name='Login' component={LoginScreen} options={{
+                    title: 'Prijavi se'
+                }}/>
+                <Stack.Screen name='SignUp' component={SignUpScreen} options={{
+                    title: 'Registruj se'
+                }}/>
                 <Stack.Screen name={'ReportProblem'} component={ReportProblemScreen} options={{
                     title: "Prijavi problem",
                     headerBackVisible: false,
-                    headerStyle: {backgroundColor: Colors.primary700},
-                    headerTintColor: Colors.primary100
                 }
                 }/>
                 <Stack.Screen name={'ReviewProblems'} component={ReviewScreen} options={{
                     title: "Pregled prijava",
-                    headerStyle: {backgroundColor: Colors.primary700},
-                    headerTintColor: Colors.primary100
                 }}
                 />
                 <Stack.Screen name={'DetailsScreen'} component={DetailsScreen} options={{
                     title: "Detalji prijave",
-                    headerStyle: {backgroundColor: Colors.primary700},
-                    headerTintColor: Colors.primary100
                 }}/>
             </>}
         </Stack.Navigator>

@@ -1,4 +1,4 @@
-import {TextInput, View, StyleSheet} from "react-native";
+import {TextInput, View, StyleSheet, Text} from "react-native";
 import Body from "./UI/Body";
 import Title from "./UI/Title";
 import InnerBody from "./UI/InnerBody";
@@ -52,7 +52,7 @@ const DescribeProblem: FC<props> = ({onConfirm, onBack}) => {
                            textAlignVertical={"top"}
                            placeholder={"Konkretno opišite problem..."}
                 />
-
+                <Text style={styles.star}>Obavezno popuniti</Text>
             </InnerBody >
             <ImagePicker setPhoto={setPhoto}/>
             <View style={styles.buttonContainer}>
@@ -80,13 +80,22 @@ const styles = StyleSheet.create({
         minHeight: '90%'
     },
     textInput: {
-        backgroundColor: Colors.primary100,
+        backgroundColor: Colors.primary200,
+        color: Colors.primary700,
         padding: 8,
-        minHeight: 150,
-        fontSize: 16
+        height: '100%',
+        fontSize: 16,
+        borderRadius: 16,
     },
     buttonContainer: {
         flex: 2,
         justifyContent: "center"
-    }
+    },
+    star: {
+        color: '#a11111',
+        fontSize: 12,
+        textAlign: "right",
+        marginHorizontal:15,
+        marginVertical: 6
+    },
 })

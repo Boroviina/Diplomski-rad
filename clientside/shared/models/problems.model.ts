@@ -17,7 +17,8 @@ export class ProblemModel extends BaseModel {
     searchId?: string;
     contactEmail?: string;
     answer?: string;
-    createdAt?: Date;
+    createdAt?: Date | string | number;
+    updatedAt?: string | undefined
 
     constructor(attributes?: any) {
         super();

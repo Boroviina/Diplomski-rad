@@ -4,6 +4,7 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import {Colors} from "../../constants/Colors";
 import {FC, useEffect, useState} from "react";
 import {ProblemStatus} from "../../shared/enums/problemStatus.enum";
+import {useAuth} from "../../shared/contexts/auth-context";
 
 type props = {
     status: string | undefined;

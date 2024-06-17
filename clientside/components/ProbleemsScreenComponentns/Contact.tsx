@@ -7,6 +7,7 @@ import {FC, useEffect, useState} from "react";
 import {useProblem} from "../../shared/contexts/problem-context";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {SearchIdGenerator} from "../../shared/contexts/helper/searchIdGenerator";
+import {Colors} from "../../constants/Colors";
 
 type props = {
     onConfirm: (confirmed: boolean) => void
@@ -37,12 +38,11 @@ const Contact: FC<props> = ({onConfirm, onBack}) => {
 
     return <Body>
         <KeyboardAwareScrollView style={styles.scroll} contentContainerStyle={styles.contentContainerStyle}>
-            <Title>Prijave su anonimne, ukoliko želite da ostavite kontakt popunite formu, u suprotnom pritisnite
-                opciju dalje.</Title>
-            <View style={{flex: 2, height: '20%'}}>
-                <AddressInput label={"Ime i prezime"} value={name} onChangeText={setName}/>
-                <AddressInput label={"Broj telefona"} value={phone} onChangeText={setPhone}/>
-                <AddressInput label={"E-mail adresa"} value={email} onChangeText={setEmail}/>
+            <Title>Anonimno! {'\n'}Ukoliko želite da ostavite kontakt.</Title>
+            <View style={styles.inputContainer}>
+                <AddressInput label={"Ime i prezime"} value={name} onChangeText={setName} must={false}/>
+                <AddressInput label={"Broj telefona"} value={phone} onChangeText={setPhone} must={false}/>
+                <AddressInput label={"E-mail adresa"} value={email} onChangeText={setEmail} must={false}/>
             </View>
             <View style={styles.buttonContainer}>
                 <LoginButtons onPress={nextHandler} children={"Dalje"}/>
@@ -69,5 +69,13 @@ const styles = StyleSheet.create({
     contentContainerStyle: {
         flexDirection: "column",
         minHeight: '80%'
+    },
+    inputContainer: {
+        flex: 2,
+        height: '20%',
+        borderWidth: 1,
+        borderColor: Colors.primary700,
+        borderRadius: 16,
+        marginTop: 10
     },
 })

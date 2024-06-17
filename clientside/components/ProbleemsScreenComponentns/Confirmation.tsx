@@ -57,7 +57,7 @@ Ukoliko zelite da pratite vasu prijavu ovo je vas kod za pretragu: \n${problem.s
     return <Body>
         <Title>Pregledajte prijavu, a zatim potrvrdite!</Title>
         <View style={{flex: 3}}>
-            <ScrollView style={{flex: 1, minHeight: '100%', backgroundColor: Colors.primary100}}>
+            <ScrollView style={styles.scroll}>
                 <Text style={styles.headerStyle}>Vrsta problema</Text>
                 <Text
                     style={styles.contentStyle}>{problem.problemType ? getEnumValueByKey(ProblemType, problem.problemType) : "Tip nije definisan"}</Text>
@@ -126,4 +126,11 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
+    scroll:{
+        flex: 1,
+        minHeight: '100%',
+        backgroundColor: Colors.primary200,
+        padding: 8,
+        borderRadius: 16
+    }
 })

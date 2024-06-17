@@ -3,6 +3,6 @@ export const Colors={
     primary100: '#b7d6ef',
     primary200: '#a7a9af',
     primary500: '#0c87ef',
-    primary400: '#5eacfa',
+    primary400: '#2865b6',
     primary700: '#074373',
 }
