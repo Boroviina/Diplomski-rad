@@ -31,6 +31,7 @@ const ChooseOption: FC<props> = ({onConfirm}) => {
         <InnerBody>
             <RNPickerSelect onValueChange={(value) => setSelectedItem(value)} items={problemTypeOptions}
                             style={pickerStyle} value={selectedItem}
+                            placeholder={{label: "Odaberi opciju", value: null}}
             />
             <Description>Odaberite opciju koja kategoriše Vaš problem zatim pritisnite opciju "Dalje"</Description>
         </InnerBody>

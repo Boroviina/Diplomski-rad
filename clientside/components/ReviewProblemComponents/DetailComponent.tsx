@@ -1,7 +1,7 @@
-import {FC, useEffect, useState} from "react";
-import {FlatList, Modal, Text, TouchableOpacity} from "react-native";
+import {FC, useCallback, useEffect, useState} from "react";
+import {FlatList, Modal, Text, TouchableOpacity, RefreshControl} from "react-native";
 import {ProblemModel} from "../../shared/models/problems.model";
-import {getProblem, updateProblem} from "../../shared/services/problems.service";
+import {getProblem, getProblems, updateProblem} from "../../shared/services/problems.service";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import Status from "./Status";
 import SentDetails from "./SentDetails";
@@ -14,7 +14,7 @@ import {ProblemStatus} from "../../shared/enums/problemStatus.enum";
 import StatusItem from "./StatusItem";
 
 type props = {
-    detailId: string;
+    detailId: string | undefined;
 }
 const problemStatusData = Object.keys(ProblemStatus).map(key => ({
     id: key,
@@ -23,14 +23,15 @@ const problemStatusData = Object.keys(ProblemStatus).map(key => ({
 const DetailComponent: FC<props> = ({detailId}) => {
     const [details, setDetails] = useState<ProblemModel | undefined>();
     const [openModal, setOpenModal] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
     const {auth} = useAuth();
 
+    const fetchData = async () => {
+        const data = await getProblem(detailId);
+        setDetails(data);
+    }
 
     useEffect(() => {
-        const fetchData = async () => {
-            const data = await getProblem(detailId);
-            setDetails(data);
-        }
         fetchData();
     }, [])
 
@@ -38,6 +39,11 @@ const DetailComponent: FC<props> = ({detailId}) => {
         setOpenModal(true);
         console.log(problemStatusData)
     }
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true);
+        await fetchData();
+        setRefreshing(false);
+    }, []);
 
     function changeHandler(status: string) {
         Alert.alert(
@@ -60,14 +66,15 @@ const DetailComponent: FC<props> = ({detailId}) => {
     }
 
     return <View style={styles.root}>
-        <KeyboardAwareScrollView style={styles.scroll} contentContainerStyle={styles.contentContainerStyle}>
+        <KeyboardAwareScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
+                                 style={styles.scroll} contentContainerStyle={styles.contentContainerStyle}>
             {auth ? <Pressable onPress={openModalHandler}>
                 <Status status={details?.status} iconSize={20} fontSize={18}/>
             </Pressable> : <Status status={details?.status} iconSize={20} fontSize={18}/>}
 
             <SentDetails details={details}/>
 
-            {auth ? <AuthAnswer  answer={details?.answer} detailId={detailId}/> : <Answer answer={details?.answer}
+            {auth ? <AuthAnswer  answer={details?.answer} detailId={detailId} email={details?.contactEmail}/> : <Answer answer={details?.answer}
                                                                                          searchKey={details?.searchId}
                                                                                          detailId={detailId}/>
             }

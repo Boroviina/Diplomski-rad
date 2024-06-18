@@ -4,108 +4,73 @@ import {Colors} from "../../constants/Colors";
 import SeeDetailsButton from "./SeeDetailsButton";
 import {getProblem, updateProblem} from "../../shared/services/problems.service";
 import {formatDate} from "../../constants/formatDate";
+import Email from "../email/Email";
+import * as MailComposer from "expo-mail-composer";
+import {ProblemModel} from "../../shared/models/problems.model";
+import SendAnswerComponent from "./SendAnswerComponent";
+import ShowAnswer from "./ShowAnswer";
 
 type props = {
     answer: string | undefined;
-    detailId: string;
+    detailId: string | undefined;
+    email?: string | undefined;
 }
-const AuthAnswer: FC<props> = ({answer, detailId}) => {
-    const [answerValue, setAnswerValue] = useState('');
-    const [newValue, setNewValue] = useState<string | undefined>('');
+const AuthAnswer: FC<props> = ({answer, detailId, email}) => {
     const [edit, setEdit] = useState(false);
     const [editSent, setEditSent] = useState(false);
-    const [modalVisible, setIsModalVisible] = useState(false)
+    const [details, setDetails] = useState<ProblemModel | undefined>();
+    const [isAvailable, setIsAvailable] = useState(false);
+    const [mail, setMail] = useState<string | undefined>('');
     let display;
 
-    async function sendAnswer() {
-        await updateProblem(detailId, {answer: answerValue});
-        Alert.alert("Odgovor poslat!");
-        if (edit) {
-            setEdit(false);
-            setEditSent(true);
-            setNewValue(answerValue);
-        } else {
-            setNewValue(answerValue);
-        }
-
-        console.log(newValue);
+    const fetchData = async () => {
+        const data = await getProblem(detailId);
+        setDetails(data);
     }
-
-    function editAnswer() {
-        setEdit(true);
-        setIsModalVisible(true)
-        setEditSent(false);
-        if (answer && answer.length > 0) {
-            setAnswerValue(answer);
-            return;
-        }
-        if (newValue && newValue.length > 0) {
-            setAnswerValue(newValue);
-            return;
+    const sendMail = () => {
+        if (isAvailable && details?.contactEmail) {
+            MailComposer.composeAsync({
+                subject: 'Odgovor',
+                body: mail,
+                recipients: [details?.contactEmail],
+            })
         }
     }
+    useEffect(() => {
+        fetchData();
+
+        async function checkAvailability() {
+            const isEmailAvalaible = await MailComposer.isAvailableAsync();
+            setIsAvailable(isEmailAvalaible);
+        }
+
+        checkAvailability();
+    }, [])
+
 
     useEffect(() => {
-        async function getData() {
-            const data = await getProblem(detailId);
-            setNewValue(data?.answer);
-        }
-
-        getData();
-    }, [editSent])
-
-
-    if ((answer && answer.length > 0) || newValue) {
         if (editSent) {
-            display = <>
-                <View style={styles.answerContainer}>
-                    <Text style={styles.answerText}>{newValue}</Text>
-                </View>
-                <View style={styles.buttonContainer}>
-                    <SeeDetailsButton onPress={editAnswer} label={'Izmijeni odgovor'}/>
-                </View>
-            </>
-        } else {
-            display = <>
-                <View style={styles.answerContainer}>
-                    <Text style={styles.answerText}>{answer ? answer : newValue}</Text>
-                </View>
-                <View style={styles.buttonContainer}>
-                    <SeeDetailsButton onPress={editAnswer} label={'Izmijeni odgovor'}/>
-                </View>
-            </>
+            fetchData();
+            setEdit(false);
+            setEditSent(false);
         }
+    }, [editSent])
+    useEffect(()=>{
+        sendMail();
+    },[mail]);
+
+
+    if (details?.answer && details.answer.length > 0) {
+        display = <ShowAnswer answer={details?.answer} setEdit={setEdit}/>
     } else {
-        display = <>
-            <TextInput style={styles.answerInput}
-                       multiline={true}
-                       numberOfLines={8}
-                       textAlignVertical={"top"}
-                       cursorColor={Colors.primary700}
-                       value={answerValue}
-                       onChangeText={setAnswerValue}
-            />
-            <View style={styles.buttonContainer}>
-                <SeeDetailsButton onPress={sendAnswer} label={'Pošalji odgovor'}/>
-            </View>
-        </>
+        display = <SendAnswerComponent detailId={detailId} setEditSent={setEditSent} setMail={setMail}/>
     }
     return <View style={{flex: 1}}>
         <Text style={styles.title}>Odgovor:</Text>
         {display}
-        {edit && <Modal visible={modalVisible} transparent={true}>
-            <TouchableOpacity style={styles.modalContainer} onPress={() => setIsModalVisible(false)}>
-                <TextInput style={styles.answerInput}
-                           multiline={true}
-                           numberOfLines={8}
-                           textAlignVertical={"top"}
-                           cursorColor={Colors.primary700}
-                           value={answerValue}
-                           onChangeText={setAnswerValue}
-                />
-                <View style={styles.buttonContainer}>
-                    <SeeDetailsButton onPress={sendAnswer} label={'Pošalji odgovor'}/>
-                </View>
+        {edit && <Modal visible={edit} transparent={true}>
+            <TouchableOpacity style={styles.modalContainer} onPress={() => setEdit(false)}>
+                <SendAnswerComponent detailId={detailId} previewAnswer={answer} setEditSent={setEditSent} setMail={setMail}/>
             </TouchableOpacity>
         </Modal>}
     </View>
@@ -114,10 +79,6 @@ const AuthAnswer: FC<props> = ({answer, detailId}) => {
 export default AuthAnswer;
 
 const styles = StyleSheet.create({
-    answerText: {
-        color: Colors.primary700,
-        fontSize: 17,
-    },
     title: {
         fontSize: 24,
         fontWeight: "bold",
@@ -127,32 +88,10 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         padding: 4
     },
-    answerInput: {
-        backgroundColor: Colors.primary200,
-        borderRadius: 12,
-        marginVertical: 8,
-        color: Colors.primary700,
-        padding: 8,
-        fontSize: 16,
-    },
-    buttonContainer: {
-        height: 40
-    },
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
         backgroundColor: 'rgba(255,255,255,0.6)',
         padding: 15
     },
-    answerContainer: {
-        paddingVertical: 10,
-        marginVertical: 10,
-        justifyContent: "flex-start",
-
-    },
-    dateContainer: {
-        justifyContent: "space-between",
-        flexDirection: "row",
-        alignItems: "center"
-    }
 })

@@ -1,8 +1,9 @@
 const httpStatus = require('http-status');
 const {Problem} = require('../models');
 const ApiError=require('../utils/ApiError');
+const emailService=require('email.service');
 
-const createProblem=async (problemBody)=>{
+const createProblem=async (problemBody, email, name)=>{
     if (!problemBody){
         throw new ApiError(httpStatus.BAD_REQUEST, "There is no problem");
     }

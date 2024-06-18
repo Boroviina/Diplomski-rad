@@ -5,7 +5,7 @@ import {Colors} from "../../constants/Colors";
 type props = {
     answer: string | undefined;
     searchKey: string | undefined;
-    detailId: string;
+    detailId: string | undefined;
 }
 const Answer: FC<props> = ({answer, searchKey, detailId}) => {
     const [code, setCode] = useState('');

@@ -8,9 +8,10 @@ import {ProblemModel} from "../../shared/models/problems.model";
 import {useNavigation} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {Colors} from "../../constants/Colors";
-import {FC} from "react";
+import {FC, useEffect, useState} from "react";
 import {ProblemType} from "../../shared/enums/problemType.enum";
 import * as Clipboard from 'expo-clipboard';
+import * as MailComposer from "expo-mail-composer";
 
 type props = {
     onBack: (confirm: boolean) => void;
@@ -24,6 +25,7 @@ const Confirmation: FC<props> = ({onBack}) => {
     const {problem} = useProblem();
     const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
+
     async function copyToClipboard(text: string) {
         await Clipboard.setStringAsync(text);
         Alert.alert("Kopirano", "Kljuc za pretragu je kopiran na uredjaj.");
@@ -32,14 +34,17 @@ const Confirmation: FC<props> = ({onBack}) => {
     function nextHandler() {
         createProblem(problem as ProblemModel)
             .then(() => {
-                Alert.alert("Uspjesno ste prijavili problem",
-                    `Pokusacemo da se odazovemo u skorije vrijeme.
-Ukoliko zelite da pratite vasu prijavu ovo je vas kod za pretragu: \n${problem.searchId}`,
-                    [
-                        {text: "OK"},
-                        {text: "Kopiraj kod", onPress: () => copyToClipboard(problem.searchId || '')}
-                    ]
-                );
+                if (problem.contactEmail) {
+                    Alert.alert("Uspjesno ste prijavili problem\nProvjerite e-mail poštu");
+                } else {
+                    Alert.alert("Uspjesno ste prijavili problem",
+                        `Ukoliko zelite da pratite vasu prijavu ovo je vas kod za pretragu: \n${problem.searchId}`,
+                        [
+                            {text: "OK"},
+                            {text: "Kopiraj kod", onPress: () => copyToClipboard(problem.searchId || '')}
+                        ]
+                    );
+                }
                 navigation.navigate('StartScreen');
             })
             .catch((error) => {
@@ -126,7 +131,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
-    scroll:{
+    scroll: {
         flex: 1,
         minHeight: '100%',
         backgroundColor: Colors.primary200,
