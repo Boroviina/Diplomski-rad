@@ -3,6 +3,24 @@ const {toJSON, paginate} = require('./plugins');
 const {problemType} = require('./enums/ProblemType');
 const {problemStatus} = require("./enums/ProblemStatus");
 
+const RegionSchema = mongoose.Schema({
+    latitude: {
+        type: Number,
+        required: true
+    },
+    longitude: {
+        type: Number,
+        required: true
+    },
+    latitudeDelta: {
+        type: Number,
+        required: true
+    },
+    longitudeDelta: {
+        type: Number,
+        required: true
+    }
+});
 
 const ProblemsSchema = mongoose.Schema({
     problemType: {
@@ -14,13 +32,12 @@ const ProblemsSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    city: {
-        type: String,
-        required: true,
+    lng:{
+        type: Number
     },
+    lat:{type:Number},
     street: {
         type: String,
-        required: true
     },
     locationDescription: {
         type: String
@@ -49,6 +66,10 @@ const ProblemsSchema = mongoose.Schema({
     answer: {
         type: String,
         default: ''
+    },
+    region: {
+        type: RegionSchema,
+        required: false // Postavi na true ako je region obavezan
     }
 }, {
     timestamps: true,

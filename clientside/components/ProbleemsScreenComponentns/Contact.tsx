@@ -38,7 +38,7 @@ const Contact: FC<props> = ({onConfirm, onBack}) => {
 
     return <Body>
         <KeyboardAwareScrollView style={styles.scroll} contentContainerStyle={styles.contentContainerStyle}>
-            <Title>Anonimno! {'\n'}Ukoliko želite da ostavite kontakt.</Title>
+            <Title>Prijava je anonimna. {'\n'}Ukoliko želite da Vas kontaktiramo za više detalja, ostavite kontakt podatke.</Title>
             <View style={styles.inputContainer}>
                 <AddressInput label={"Ime i prezime"} value={name} onChangeText={setName} must={false}/>
                 <AddressInput label={"Broj telefona"} value={phone} onChangeText={setPhone} must={false}/>

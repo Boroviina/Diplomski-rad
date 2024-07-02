@@ -6,24 +6,27 @@ type props = {
     label: string;
     multiline?: boolean
     numberOfLines?: number
+    scrollEnabled?: boolean
     onChangeText: (text: string) => void;
+    minHeight?: number;
     value: string;
     must: boolean;
 }
 
-const AddressInput: FC<props> = ({label, must, multiline, numberOfLines, onChangeText, value}) => {
+const AddressInput: FC<props> = ({label, must,minHeight, multiline, scrollEnabled, numberOfLines, onChangeText, value}) => {
     return <View style={styles.container}>
         <View style={styles.labelContainer}>
             <Text style={styles.text}>{label}</Text>
             {must && <Text style={styles.star}> *</Text>}
         </View>
-        <TextInput style={styles.textInput}
+        <TextInput style={[styles.textInput]}
                    onChangeText={onChangeText}
                    value={value}
                    multiline={multiline}
-                   numberOfLines={numberOfLines}
                    textAlignVertical={"top"}
+                   numberOfLines={numberOfLines}
                    cursorColor={Colors.primary700}
+                   scrollEnabled={scrollEnabled}
         />
     </View>
 }
@@ -32,6 +35,7 @@ export default AddressInput;
 
 const styles = StyleSheet.create({
     textInput: {
+        flexGrow: 1,
         backgroundColor: Colors.primary200,
         borderRadius: 16,
         marginVertical: 5,

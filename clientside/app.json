@@ -30,6 +30,7 @@
           "cameraPermission": "Allow device to access your camera",
           "photosPermission": "Allow device to access your photos"
         }
+
       ]
     ]
   }

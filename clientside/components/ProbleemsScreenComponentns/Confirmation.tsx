@@ -1,5 +1,4 @@
-import {Alert, Image, ScrollView, StyleSheet, Text, View} from "react-native";
-import Body from "./UI/Body";
+import {Alert, Image, ScrollView, StyleSheet, Text, View, ToastAndroidStatic, ToastAndroid} from "react-native";
 import Title from "./UI/Title";
 import LoginButtons from "../startScreensComponents/LoginButtons";
 import {useProblem} from "../../shared/contexts/problem-context";
@@ -8,10 +7,10 @@ import {ProblemModel} from "../../shared/models/problems.model";
 import {useNavigation} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {Colors} from "../../constants/Colors";
-import {FC, useEffect, useState} from "react";
+import {FC} from "react";
 import {ProblemType} from "../../shared/enums/problemType.enum";
 import * as Clipboard from 'expo-clipboard';
-import * as MailComposer from "expo-mail-composer";
+import MapView, {Marker} from "react-native-maps";
 
 type props = {
     onBack: (confirm: boolean) => void;
@@ -28,23 +27,19 @@ const Confirmation: FC<props> = ({onBack}) => {
 
     async function copyToClipboard(text: string) {
         await Clipboard.setStringAsync(text);
-        Alert.alert("Kopirano", "Kljuc za pretragu je kopiran na uredjaj.");
+        ToastAndroid.show("Ključ je uspješno kopiran!", ToastAndroid.LONG);
     }
 
     function nextHandler() {
         createProblem(problem as ProblemModel)
             .then(() => {
-                if (problem.contactEmail) {
-                    Alert.alert("Uspjesno ste prijavili problem\nProvjerite e-mail poštu");
-                } else {
-                    Alert.alert("Uspjesno ste prijavili problem",
-                        `Ukoliko zelite da pratite vasu prijavu ovo je vas kod za pretragu: \n${problem.searchId}`,
-                        [
-                            {text: "OK"},
-                            {text: "Kopiraj kod", onPress: () => copyToClipboard(problem.searchId || '')}
-                        ]
-                    );
-                }
+                Alert.alert("Uspjesno ste prijavili problem",
+                    `Pratite prijavu uz kod za pretragu: \n${problem.searchId}`,
+                    [
+                        {text: "OK"},
+                        {text: "Kopiraj kod", onPress: () => copyToClipboard(problem.searchId || '')}
+                    ]
+                );
                 navigation.navigate('StartScreen');
             })
             .catch((error) => {
@@ -59,9 +54,36 @@ const Confirmation: FC<props> = ({onBack}) => {
         onBack(true);
     }
 
-    return <Body>
+    let address;
+    let contact;
+
+    if (problem.street) {
+        address = <>
+            <Text style={styles.headerStyle}>Adresa</Text>
+            <Text style={styles.contentStyle}>{problem.street}</Text>
+            <Text style={styles.contentStyle}>{problem.locationDescription}</Text>
+        </>
+    } else {
+        address = <View style={styles.mapContainer}>
+            <MapView style={styles.mapContainer} initialRegion={problem.region}>
+                <Marker coordinate={{latitude: problem.lat, longitude: problem.lng}}
+                        title={"Odabrana lokacija"}
+                />
+            </MapView>
+        </View>
+    }
+    if (problem.contactName || problem.contactEmail || problem.phoneNumber) {
+        contact = <>
+            <Text style={styles.headerStyle}>Kontakt</Text>
+            <Text style={styles.contentStyle}>{problem.contactName}</Text>
+            <Text style={styles.contentStyle}>{problem.phoneNumber}</Text>
+            <Text style={styles.contentStyle}>{problem.contactEmail}</Text>
+        </>
+    }
+
+    return <View style={styles.root}>
         <Title>Pregledajte prijavu, a zatim potrvrdite!</Title>
-        <View style={{flex: 3}}>
+        <View style={{flex: 4, paddingVertical: 5}}>
             <ScrollView style={styles.scroll}>
                 <Text style={styles.headerStyle}>Vrsta problema</Text>
                 <Text
@@ -76,26 +98,24 @@ const Confirmation: FC<props> = ({onBack}) => {
                             </View>
                         ))}
                 </ScrollView>
-                <Text style={styles.headerStyle}>Adresa</Text>
-                <Text style={styles.contentStyle}>{problem.city}</Text>
-                <Text style={styles.contentStyle}>{problem.street}</Text>
-                <Text style={styles.contentStyle}>{problem.locationDescription}</Text>
-                <Text style={styles.headerStyle}>Kontakt</Text>
-                <Text style={styles.contentStyle}>{problem.contactName}</Text>
-                <Text style={styles.contentStyle}>{problem.phoneNumber}</Text>
-                <Text style={styles.contentStyle}>{problem.contactEmail}</Text>
+                {address}
+                {contact}
             </ScrollView>
         </View>
         <View style={styles.buttonContainer}>
             <LoginButtons onPress={nextHandler} children={"Potvrdi"}/>
             <LoginButtons onPress={backHandler} children={"Nazad"}/>
         </View>
-    </Body>
+    </View>
 }
 
 export default Confirmation;
 
 const styles = StyleSheet.create({
+    root: {
+        flex: 1,
+        padding: 5
+    },
     buttonContainer: {
         flex: 2,
         justifyContent: "center"
@@ -135,7 +155,12 @@ const styles = StyleSheet.create({
         flex: 1,
         minHeight: '100%',
         backgroundColor: Colors.primary200,
-        padding: 8,
+        paddingHorizontal: 12,
         borderRadius: 16
+    },
+    mapContainer: {
+        height: 150,
+        width: "auto",
+        marginVertical: 5
     }
 })

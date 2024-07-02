@@ -4,7 +4,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import {Colors} from "../../../constants/Colors";
 
 type props = {
-    onPress: () => {},
+    onPress: () => void,
     icon: string,
     label: string
 }
@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
         borderRadius: 14,
         justifyContent: "center",
         alignItems: "center",
-        flex:1
+        flex:1,
+        marginHorizontal: 3
     },
     content: {
         flexDirection: "row",

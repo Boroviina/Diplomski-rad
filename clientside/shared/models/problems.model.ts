@@ -2,6 +2,13 @@ import {BaseModel} from "./base.model";
 import {ProblemStatus} from '../enums/problemStatus.enum'
 import {ProblemType} from '../enums/problemType.enum'
 
+interface Region {
+    latitude: number;
+    longitude: number;
+    latitudeDelta: number;
+    longitudeDelta: number;
+}
+
 export class ProblemModel extends BaseModel {
     id?: string;
     problemType?: ProblemType;
@@ -18,7 +25,11 @@ export class ProblemModel extends BaseModel {
     contactEmail?: string;
     answer?: string;
     createdAt?: Date | string | number;
-    updatedAt?: string | undefined
+    updatedAt?: string | undefined;
+    region?: Region
+    lat?: number | null;
+    lng?: number | null;
+    convertedAddress?: string | undefined;
 
     constructor(attributes?: any) {
         super();

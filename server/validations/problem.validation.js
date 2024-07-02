@@ -1,19 +1,28 @@
 const Joi = require('joi');
 const {objectID} = require('./custom.validation');
 
+const RegionSchema = Joi.object({
+    latitude: Joi.number().required(),
+    longitude: Joi.number().required(),
+    latitudeDelta: Joi.number().required(),
+    longitudeDelta: Joi.number().required(),
+});
+
 const CreateProblem = {
     body: Joi.object().keys({
         problemType: Joi.string().required(),
         description: Joi.string().required(),
-        city: Joi.string().required(),
-        street: Joi.string().required(),
-        locationDescription: Joi.string(),
+        street: Joi.string().allow(''),
+        locationDescription: Joi.string().allow(''),
         contactName: Joi.string().allow(''),
         phoneNumber: Joi.string().allow(''),
         contactEmail: Joi.string().allow(''),
         uri: Joi.array().items(Joi.string()),
         status: Joi.string(),
         searchId: Joi.string().required(),
+        lat: Joi.number(),
+        lng: Joi.number(),
+        region: RegionSchema.optional()
     })
 }
 

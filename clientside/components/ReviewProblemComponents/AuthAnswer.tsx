@@ -27,25 +27,25 @@ const AuthAnswer: FC<props> = ({answer, detailId, email}) => {
         const data = await getProblem(detailId);
         setDetails(data);
     }
-    const sendMail = () => {
-        if (isAvailable && details?.contactEmail) {
-            MailComposer.composeAsync({
-                subject: 'Odgovor',
-                body: mail,
-                recipients: [details?.contactEmail],
-            })
-        }
-    }
-    useEffect(() => {
-        fetchData();
-
-        async function checkAvailability() {
-            const isEmailAvalaible = await MailComposer.isAvailableAsync();
-            setIsAvailable(isEmailAvalaible);
-        }
-
-        checkAvailability();
-    }, [])
+    // const sendMail = () => {
+    //     if (isAvailable && details?.contactEmail) {
+    //         MailComposer.composeAsync({
+    //             subject: 'Odgovor',
+    //             body: mail,
+    //             recipients: [details?.contactEmail],
+    //         })
+    //     }
+    // }
+    // useEffect(() => {
+    //
+    //
+    //     async function checkAvailability() {
+    //         const isEmailAvalaible = await MailComposer.isAvailableAsync();
+    //         setIsAvailable(isEmailAvalaible);
+    //     }
+    //
+    //     checkAvailability();
+    // }, [])
 
 
     useEffect(() => {
@@ -56,7 +56,7 @@ const AuthAnswer: FC<props> = ({answer, detailId, email}) => {
         }
     }, [editSent])
     useEffect(()=>{
-        sendMail();
+        fetchData();
     },[mail]);
 
 
