@@ -7,6 +7,7 @@ import PressableImage from "./PressableImage";
 import {Video} from "expo-av";
 import PictureModal from "./PictureModal";
 import {formatDate} from "../../constants/formatDate";
+import MapView, {Marker} from "react-native-maps";
 
 type props = {
     details: ProblemModel | undefined
@@ -56,6 +57,31 @@ const SentDetails: FC<props> = ({details}) => {
         setSelectedImageUri(uri);
         setIsModalVisible(true);
     }
+    let address;
+    if (details?.street){
+        address= <>
+            <Text style={styles.header}>Adresa</Text>
+            <Text style={styles.text}>{details?.street}</Text>
+            <Text style={styles.text}>{details?.locationDescription}</Text>
+        </>
+    }else if (details?.lat && details?.lng){
+        address = <View style={styles.mapContainer}>
+            <MapView style={styles.mapContainer} initialRegion={details?.region}>
+                <Marker coordinate={{latitude: details?.lat, longitude: details?.lng}}
+                        title={"Odabrana lokacija"}
+                />
+            </MapView>
+        </View>
+    }
+    let contact;
+    if (details?.contactName || details?.contactEmail || details?.phoneNumber) {
+        contact = <>
+            <Text style={styles.header}>Kontakt</Text>
+            <Text style={styles.text}>{details?.contactName}</Text>
+            <Text style={styles.text}>{details?.phoneNumber}</Text>
+            <Text style={styles.text}>{details?.contactEmail}</Text>
+        </>
+    }
 
 
     return <View style={{flex: 1}}>
@@ -70,14 +96,8 @@ const SentDetails: FC<props> = ({details}) => {
             }]}>{details?.problemType ? getEnumValueByKey(ProblemType, details.problemType) : "Tip nije definisan"}</Text>
         <Text></Text>
         <Text style={styles.text}>{details?.description}</Text>
-        <Text style={styles.header}>Adresa</Text>
-        <Text style={styles.text}>{details?.city}</Text>
-        <Text style={styles.text}>{details?.street}</Text>
-        <Text style={styles.text}>{details?.locationDescription}</Text>
-        <Text style={styles.header}>Kontakt</Text>
-        <Text style={styles.text}>{details?.contactName}</Text>
-        <Text style={styles.text}>{details?.phoneNumber}</Text>
-        <Text style={styles.text}>{details?.contactEmail}</Text>
+        {address}
+        {contact}
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
             {details?.uri?.map(renderMedia)}
         </ScrollView>
@@ -147,5 +167,10 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         flexDirection: "row",
         alignItems: "center"
+    },
+    mapContainer: {
+        height: 150,
+        width: "auto",
+        marginVertical: 5
     }
 })
