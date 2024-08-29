@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, RefreshControl, ScrollView} from "react-native";
+import {StyleSheet, Text, View, RefreshControl, ScrollView, ImageBackground} from "react-native";
 import FilterComponent from "./FilterComponent";
 import ProblemLog from "./problemLog";
 import {Colors} from "../../constants/Colors";
@@ -55,7 +55,11 @@ const RewiewComponent = () => {
 
     }
 
-    return <View style={styles.mainContainer}>
+    return <ImageBackground
+        source={require('../../assets/backgroundPic.jpg')}
+        style={styles.background}
+    >
+    <View style={styles.mainContainer}>
         <View style={styles.filterContainer}>
             <FilterComponent value={code}
                              onChangeText={setCode}
@@ -79,14 +83,18 @@ const RewiewComponent = () => {
             )}
         </ScrollView>
     </View>
+    </ImageBackground>
 }
 export default RewiewComponent;
 
 const styles = StyleSheet.create({
+    background:{
+        flex:1
+    },
     mainContainer: {
         flex: 1,
         flexDirection: "column",
-        backgroundColor: Colors.primary50,
+        backgroundColor: 'rgba(255,255,255,0.6)',
         padding: 10
     },
     filterContainer: {

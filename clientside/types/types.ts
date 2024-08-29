@@ -10,4 +10,6 @@ export type RootStackParamsList = {
     ReviewProblems: undefined;
     DetailsScreen: { detailId: string | undefined };
     AuthDetailScreen: { detailId: string | undefined };
+    ProfileDetailScreen: undefined;
+
 }

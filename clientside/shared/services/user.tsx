@@ -35,3 +35,10 @@ export const deleteUser = (userId: string): Promise<any> => {
         .then(response => response.data);
 }
 
+export const validatePassword = (userId: string, newPassword: string)=>{
+    return Api.post(`${USER_ENDPOINT}/validate-password/${userId}`, {
+        password: {newPassword}
+    })
+        .then(response=>response.data.isValid);
+}
+

@@ -16,12 +16,13 @@ import DetailsScreen from "./screens/DetailsScreen";
 import AuthDetailScreen from "./screens/AuthDetailScreen";
 import LogoutButton from "./components/ReviewProblemComponents/logoutButton";
 import EntryScreen from "./screens/EntryScreen";
+import ProfilDetailScreen from "./screens/ProfileDetailScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamsList>();
 
 
 function AuthentificationScreens() {
-    const {auth, logout} = useAuth();
+    const {auth, logout, currentUser} = useAuth();
 
 
     return (<Stack.Navigator screenOptions={{
@@ -29,14 +30,21 @@ function AuthentificationScreens() {
             headerTintColor: Colors.primary100
         }}>
             {auth ? <>
-                <Stack.Screen name={'Revision'} component={Reviosion} options={{
+                <Stack.Screen name={'Revision'} component={Reviosion} options={({navigation})=>({
                     title: "Pristigle prijave",
                     headerRight: () => (
-                        <LogoutButton logout={logout}/>
+                        <>
+                            <LogoutButton action={logout} label={"Odjavi se"}/>
+                            <LogoutButton action={()=>navigation.navigate('ProfileDetailScreen')} label={currentUser?.name+" "+currentUser?.lastname}/>
+                        </>
+
                     )
-                }}/>
+                })}/>
                 <Stack.Screen name={'AuthDetailScreen'} component={AuthDetailScreen} options={{
                     title: "Detalji prijave",
+                }}/>
+                <Stack.Screen name={'ProfileDetailScreen'} component={ProfilDetailScreen} options={{
+                    title: currentUser?.name+' '+currentUser?.lastname,
                 }}/>
             </> : <>
                 <Stack.Screen name={'EntryScreen'} component={EntryScreen} options={{

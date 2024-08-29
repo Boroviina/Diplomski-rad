@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: '#85c5f5',
+        borderWidth:1,
+        borderColor: Colors.primary700,
         padding: 8,
         minWidth: 200,
         marginTop: 12,
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     text: {
-        color: 'white',
+        color: Colors.primary700,
         fontSize: 16
     }
 })

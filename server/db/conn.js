@@ -2,10 +2,7 @@ const {MongoClient} = require('mongodb');
 require('dotenv').config();
 const connectionString = process.env.ATLAS_URI || "";
 
-
-
 const client = new MongoClient(connectionString);
-
 let conn;
 
 async function connectionToDatabase() {
@@ -13,10 +10,7 @@ async function connectionToDatabase() {
         try {
             await client.connect();
             conn = client.db('database1');
-            console.log('Successfully connected to MongoDB');
-
-            // const collections = await conn.listCollections().toArray();
-            // console.log('Kolekcije u bazi podataka:', collections);
+            console.log('Successfully connected to MongoDB database');
         } catch (e) {
             console.error(e);
             console.error('Could not connect to MongoDB:', e);
@@ -24,7 +18,4 @@ async function connectionToDatabase() {
     }
     return conn;
 }
-
-
-// let db = conn.db('database1');
 module.exports = connectionToDatabase;

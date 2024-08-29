@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const {User} = require('../models');
 const ApiError = require('../utils/ApiError');
+const bcrypt = require("bcrypt");
 
 const createUser = async (userBody) => {
     if (await User.isEmailTaken(userBody.email)) {
@@ -42,6 +43,17 @@ const deleteUserById = async (userId) => {
     await user.deleteOne();
     return user;
 }
+const validatePassword = async (id, newPassword) => {
+
+        const user=await getUserById(id);
+        console.log("User object:", user);
+        console.log("User object:", user.password);
+        console.log("Lozinka:", newPassword.newPassword);
+
+
+        const isValid=await bcrypt.compare(newPassword.newPassword, user.password);
+        return isValid;
+}
 
 module.exports = {
     createUser,
@@ -49,6 +61,7 @@ module.exports = {
     getUserById,
     getUserByEmail,
     updateUserById,
-    deleteUserById
+    deleteUserById,
+    validatePassword
 }
 

@@ -5,9 +5,10 @@ import {FC} from "react";
 
 
 type props = {
-    showModal: (s: boolean) => void
+    showModal: (s: boolean) => void;
+    setLocation: (lat: number, lng: number) => void
 }
-const LocationPicker: FC<props> = ({showModal}) => {
+const LocationPicker: FC<props> = ({showModal, setLocation}) => {
     const [locationPermissionInformation, requestPermission] = useForegroundPermissions()
 
     async function verifyPermission() {
@@ -30,7 +31,7 @@ const LocationPicker: FC<props> = ({showModal}) => {
             return;
         }
         const location = await getCurrentPositionAsync();
-        console.log(location);
+        setLocation(location.coords.latitude, location.coords.longitude);
     }
 
     function pickOnMapHandler() {

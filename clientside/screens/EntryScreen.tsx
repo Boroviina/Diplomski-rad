@@ -14,7 +14,7 @@ const EntryScreen = () => {
     }
 
     return <View style={styles.root}>
-        <Image source={require('../assets/logo3.png')} style={styles.image}/>
+        <Image source={require('../assets/backgroundPic.jpg')} style={styles.image}/>
         <Text style={styles.message}>{'\t\t\t\t'}Prijavite {'\n\t\t\t\t\t\t'}komunalne probleme {'\n\t\t\t'}i doprinesite {'\n\t\t\t\t\t\t\t\t\t'}poboljšanju
             kvaliteta života {'\n\t\t\t\t\t'}svih građana.</Text>
         <Pressable style={styles.button} onPress={nextHandler}>

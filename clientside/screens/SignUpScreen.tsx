@@ -1,4 +1,4 @@
-import {Alert, Pressable, ScrollView, ScrollViewBase, StyleSheet, Text, View} from "react-native";
+import {Alert, Pressable, ScrollView, ScrollViewBase, StyleSheet, Text, View, ImageBackground} from "react-native";
 import Card from "../components/startScreensComponents/Card";
 import Input from "../components/startScreensComponents/Input";
 import {useState} from "react";
@@ -74,7 +74,7 @@ export default SignUpScreen;
 
 const styles = StyleSheet.create({
     text: {
-        color: 'white',
+        color: Colors.primary700,
         textAlign: "center",
         fontSize: 24,
         marginBottom: 18,

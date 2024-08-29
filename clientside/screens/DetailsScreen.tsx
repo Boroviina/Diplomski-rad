@@ -4,15 +4,6 @@ import {ProblemModel} from "../shared/models/problems.model";
 import {getProblem} from "../shared/services/problems.service";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamsList} from "../types/types";
-import {Colors} from "../constants/Colors";
-import {ProblemType} from "../shared/enums/problemType.enum";
-import {Video} from 'expo-av';
-import PressableImage from "../components/ReviewProblemComponents/PressableImage";
-import PictureModal from "../components/ReviewProblemComponents/PictureModal";
-import SentDetails from "../components/ReviewProblemComponents/SentDetails";
-import Answer from "../components/ReviewProblemComponents/Answer";
-import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
-import Status from "../components/ReviewProblemComponents/Status";
 import DetailComponent from "../components/ReviewProblemComponents/DetailComponent";
 
 function getEnumValueByKey(enumObj: any, key: string): string {

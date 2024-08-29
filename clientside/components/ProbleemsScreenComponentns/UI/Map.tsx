@@ -4,7 +4,7 @@ import {FC, useEffect, useState} from "react";
 import PhotoButton from "./PhotoButton";
 import {Colors} from "../../../constants/Colors";
 import {useProblem} from "../../../shared/contexts/problem-context";
-import {getAddress} from "../../../constants/locationAPI";
+
 
 
 type Location = {
@@ -20,7 +20,7 @@ type Region = {
 }
 type props = {
     setShowModal: (s: boolean) => void;
-    locationConfirmed: (s: boolean) => void;
+    locationConfirmed: (lat: number, lng: number) => void;
 }
 
 const Map: FC<props> = ({setShowModal, locationConfirmed}) => {
@@ -41,36 +41,38 @@ const Map: FC<props> = ({setShowModal, locationConfirmed}) => {
         const lat = event.nativeEvent.coordinate.latitude;
         const lng = event.nativeEvent.coordinate.longitude;
 
+        setLng(lng);
+        setLat(lat);
 
         setSelectedLocation({lat: lat, lng: lng})
-        locationConfirmed(true);
+
     }
 
     function closeModal() {
         setShowModal(false)
     }
 
-    useEffect(() => {
-        if (selectedLocation) {
-            setLng(selectedLocation.lng);
-            setLat(selectedLocation.lat);
-            setChangeRegion(true)
-        }
+    // useEffect(() => {
+    //     if (selectedLocation) {
+    //         setLng(selectedLocation.lng);
+    //         setLat(selectedLocation.lat);
+    //         setChangeRegion(true)
+    //     }
+    //
+    //     console.log("Ovo je selektovana lokacija:", selectedLocation);
+    //     console.log("Ovo je selektovana region:", region);
+    // }, [selectedLocation])
 
-        console.log("Ovo je selektovana lokacija:", selectedLocation);
-        console.log("Ovo je selektovana region:", region);
-    }, [selectedLocation])
-
-    useEffect(() => {
-        if (selectedLocation) {
-            setRegion({
-                latitude: selectedLocation.lat,
-                longitude: selectedLocation.lng,
-                latitudeDelta: 0.005,
-                longitudeDelta: 0.005
-            })
-        }
-    }, [changeRegion])
+    // useEffect(() => {
+    //     if (selectedLocation) {
+    //         setRegion({
+    //             latitude: selectedLocation.lat,
+    //             longitude: selectedLocation.lng,
+    //             latitudeDelta: 0.005,
+    //             longitudeDelta: 0.005
+    //         })
+    //     }
+    // }, [changeRegion])
 
 
     function savePickedLocation() {
@@ -82,10 +84,9 @@ const Map: FC<props> = ({setShowModal, locationConfirmed}) => {
             return;
         }
 
-        setProblem({...problem, lng: long, lat: lang, region: region})
+        // setProblem({...problem, lng: long, lat: lang, region: region})
+        locationConfirmed(lang, long);
         setShowModal(false);
-
-
     }
 
 

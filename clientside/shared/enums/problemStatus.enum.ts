@@ -1,6 +1,6 @@
 export enum ProblemStatus{
     primljeno='Primljeno',
     obradaUToku="Obrada u toku",
-    zavrseno="Zavrseno",
+    gotovo="Gotovo",
     odbijeno='Odbijeno'
 }

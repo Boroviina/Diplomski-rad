@@ -1,4 +1,4 @@
-import {View, StyleSheet} from "react-native";
+import {View, StyleSheet, ImageBackground} from "react-native";
 import {ReactNode, FC} from "react";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 
@@ -6,7 +6,11 @@ type children = {
     children: ReactNode,
 }
 const Card: FC<children> = ({children}) => {
-    return <View style={[styles.root]}>
+    return <ImageBackground
+        source={require('../../assets/backgroundPic.jpg')}
+        style={styles.background}
+    >
+    <View style={[styles.root]}>
 
         <View style={styles.card}>
             <KeyboardAwareScrollView>
@@ -14,13 +18,17 @@ const Card: FC<children> = ({children}) => {
             </KeyboardAwareScrollView>
         </View>
     </View>
+    </ImageBackground>
 }
 
 export default Card;
 
 const styles = StyleSheet.create({
+    background:{
+        flex: 1
+    },
     card: {
-        backgroundColor: '#0c87ef',
+        backgroundColor: 'rgba(255,255,255,0.6)',
         paddingHorizontal: 32,
         paddingVertical: 16,
         justifyContent: "center",
@@ -30,6 +38,6 @@ const styles = StyleSheet.create({
     root: {
         flex: 1,
         padding: 24,
-        backgroundColor: '#b7d6ef'
+        backgroundColor: 'rgba(255,255,255,0.3)'
     },
 })

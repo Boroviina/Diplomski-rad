@@ -36,7 +36,9 @@ export default AddressInput;
 const styles = StyleSheet.create({
     textInput: {
         flexGrow: 1,
-        backgroundColor: Colors.primary200,
+        backgroundColor: Colors.primary100,
+        borderWidth:1,
+        borderColor: Colors.primary700,
         borderRadius: 16,
         marginVertical: 5,
         paddingHorizontal: 10,

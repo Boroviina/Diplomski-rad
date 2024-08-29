@@ -14,4 +14,7 @@ router.route('/:userId')
     .put(validate(userValidation.updateUser), userController.updateUser)
     .delete(validate(userValidation.deleteUser), userController.deleteUser);
 
+router.route('/validate-password/:userId')
+    .post(userController.validatePassword)
+
 module.exports = router;

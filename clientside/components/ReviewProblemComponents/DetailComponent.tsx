@@ -1,5 +1,5 @@
 import {FC, useCallback, useEffect, useState} from "react";
-import {FlatList, Modal, Text, TouchableOpacity, RefreshControl} from "react-native";
+import {FlatList, Modal, Text, TouchableOpacity, RefreshControl, ImageBackground} from "react-native";
 import {ProblemModel} from "../../shared/models/problems.model";
 import {getProblem, getProblems, updateProblem} from "../../shared/services/problems.service";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
@@ -65,7 +65,11 @@ const DetailComponent: FC<props> = ({detailId}) => {
         )
     }
 
-    return <View style={styles.root}>
+    return <ImageBackground
+            source={require('../../assets/backgroundPic.jpg')}
+            style={styles.background}
+    >
+    <View style={styles.root}>
         <KeyboardAwareScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
                                  style={styles.scroll} contentContainerStyle={styles.contentContainerStyle}>
             {auth ? <Pressable onPress={openModalHandler}>
@@ -91,14 +95,18 @@ const DetailComponent: FC<props> = ({detailId}) => {
             </Modal>}
         </KeyboardAwareScrollView>
     </View>
+    </ImageBackground>
 }
 
 export default DetailComponent;
 
 const styles = StyleSheet.create({
+    background:{
+        flex:1
+    },
     root: {
         flex: 1,
-        backgroundColor: Colors.primary50,
+        backgroundColor: 'rgba(255,255,255,0.8)',
         padding: 20,
         paddingVertical: 30,
         flexDirection: "column"
@@ -122,9 +130,10 @@ const styles = StyleSheet.create({
     },
     flatListContainer: {
         paddingVertical: 50,
-        backgroundColor: 'white',
+        backgroundColor:'#85c5f5',
         width: 300,
-        paddingLeft: 50
+        paddingLeft: 50,
+        borderRadius:12
     },
     pressed:{
         backgroundColor: 'rgba(183,214,239, 0.7)'

@@ -50,7 +50,7 @@ const DescribeProblem: FC<props> = ({onConfirm, onBack}) => {
                            cursorColor={Colors.primary700}
                            numberOfLines={10}
                            textAlignVertical={"top"}
-                           placeholder={"Konkretno opišite problem..."}
+                           placeholder={"Konkretan opis problema..."}
                 />
                 <Text style={styles.star}>Obavezno popuniti</Text>
             </InnerBody >
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         minHeight: '90%'
     },
     textInput: {
-        backgroundColor: Colors.primary200,
+        backgroundColor: Colors.primary100,
         color: Colors.primary700,
         padding: 8,
         height: '100%',

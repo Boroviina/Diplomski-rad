@@ -1,4 +1,4 @@
-import {View, StyleSheet, Text} from "react-native";
+import {View, StyleSheet, Text, ImageBackground} from "react-native";
 import {Colors} from "../constants/Colors";
 import ChooseOption from "../components/ProbleemsScreenComponentns/ChooseOption";
 import {useEffect, useState} from "react";
@@ -31,21 +31,29 @@ const ReportProblemScreen = () => {
         case 5: card = <Confirmation onBack={goToPreviousStep}/>
     }
 
-    return <View style={styles.root}>
+    return <ImageBackground
+        source={require('../assets/backgroundPic.jpg')}
+        style={styles.background}
+    >
+    <View style={styles.root}>
         <ProblemProvider>
             {card}
         </ProblemProvider>
     </View>
+    </ImageBackground>
 }
 
 export default ReportProblemScreen;
 
 const styles = StyleSheet.create({
     root: {
-        backgroundColor: Colors.primary50,
+        backgroundColor: 'rgba(255,255,255,0.7)',
         flex: 1,
         height: '100%'
     },
+    background:{
+        flex: 1
+    }
 
 
 })

@@ -33,7 +33,7 @@ const Confirmation: FC<props> = ({onBack}) => {
     function nextHandler() {
         createProblem(problem as ProblemModel)
             .then(() => {
-                Alert.alert("Uspjesno ste prijavili problem",
+                Alert.alert("Uspješno ste prijavili problem",
                     `Pratite prijavu uz kod za pretragu: \n${problem.searchId}`,
                     [
                         {text: "OK"},
@@ -154,13 +154,14 @@ const styles = StyleSheet.create({
     scroll: {
         flex: 1,
         minHeight: '100%',
-        backgroundColor: Colors.primary200,
+        backgroundColor: Colors.primary100,
         paddingHorizontal: 12,
         borderRadius: 16
     },
     mapContainer: {
         height: 150,
         width: "auto",
-        marginVertical: 5
+        marginVertical: 5,
+        borderRadius:20
     }
 })

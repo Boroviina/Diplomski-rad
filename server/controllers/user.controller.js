@@ -4,6 +4,7 @@ const pick = require('../utils/pick');
 const catchAsync = require('../utils/catchAsync');
 const userService = require('../services/user.service');
 const httpStatus = require("http-status");
+const {authService} = require("../services");
 
 const createUser = catchAsync(async (req, res) => {
     const user = await userService.createUser(req.body);
@@ -34,13 +35,20 @@ const deleteUser=catchAsync(async (req,res)=>{
     await userService.deleteUserById(req.params.userId);
     res.status(httpStatus.NO_CONTENT).send();
 })
+const validatePassword = catchAsync(async (req, res) => {
+    const userId=req.params.userId;
+    const password = req.body.password
+    const  isValid = await userService.validatePassword(userId, password);
+    res.status(httpStatus.NO_CONTENT).json({isValid});
+});
 
 module.exports={
     deleteUser,
     updateUser,
     getUser,
     getUsers,
-    createUser
+    createUser,
+    validatePassword
 }
 
 // const getAllUsers = async (req, res) => {

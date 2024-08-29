@@ -22,7 +22,7 @@ function getStatusIcon(status: string | undefined) {
             return {name: 'dot-circle', color: '#E49B0F'}
         case ProblemStatus.obradaUToku.toLowerCase().replace(/\s/g, ''):
             return {name: 'spinner', color: '#E49B0F'};
-        case ProblemStatus.zavrseno.toLowerCase():
+        case ProblemStatus.gotovo.toLowerCase():
             return {name: 'check-circle', color: '#28A745'};
         case ProblemStatus.odbijeno.toLowerCase():
             return {name: 'times-circle', color: '#9b0e0e'}

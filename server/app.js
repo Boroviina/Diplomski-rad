@@ -24,10 +24,9 @@ app.use('/', routes);
 
 async function startServer() {
     try {
-        await connectionToDatabase();
+        // await connectionToDatabase();
 
         await mongoose.connect(process.env.ATLAS_URI)
-
         console.log('Connected to database');
         app.listen(port, () => {
             console.log(`Server is running on port ${port}`);

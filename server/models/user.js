@@ -6,43 +6,24 @@ const {roles} = require('../config/roles');
 
 const userSchema = new mongoose.Schema({
         name: {type: String, required: true, trim: true,},
-        lastname: {type: String, required: true, trim: true},
-        email: {
-            type: String,
-            required: true,
-            unique: true,
-            trim: true,
+        lastname: {type: String, trim: true},
+        email: {type: String, required: true, unique: true, trim: true,
             validate(value) {
                 if (!validator.isEmail(value)) {
                     throw new Error('Invalid email');
                 }
             }
         },
-        password: {
-            type: String,
-            required: true,
-            trim: true,
-            minLength: 8,
+        password: {type: String, required: true, trim: true, minLength: 8,private: true,
             validate(value) {
                 if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
                     throw new Error('Password must contain at least one letter and one number');
                 }
             },
-            private: true,
         },
-        role: {
-            type: String,
-            enum: roles,
-            default: 'user',
-        },
-        active: {
-            type: Boolean,
-            default: false
-        },
-        isEmailVerified: {
-            type: Boolean,
-            default: false,
-        },
+        role: {type: String, enum: roles, default: 'user',},
+        active: {type: Boolean, default: false},
+        isEmailVerified: {type: Boolean, default: false,},
     },
     {
         timestamps: true,

@@ -1,4 +1,4 @@
-import {Alert, StyleSheet, TextInput, View} from "react-native";
+import {Alert, StyleSheet, TextInput, ToastAndroid, View} from "react-native";
 import {Colors} from "../../constants/Colors";
 import SeeDetailsButton from "./SeeDetailsButton";
 import {getProblem, updateProblem} from "../../shared/services/problems.service";
@@ -32,7 +32,7 @@ const SendAnswerComponent: FC<props> = ({detailId, previewAnswer, setEditSent, s
     async function sendAnswer() {
         await updateProblem(detailId, {answer: answerValue});
         setMail(answerValue);
-        Alert.alert("Poslali ste odgovor!");
+        ToastAndroid.show("Odgovor poslat!", ToastAndroid.LONG);
         await fetchData();
         setEditSent(true);
     }
@@ -56,7 +56,9 @@ export default SendAnswerComponent;
 
 const styles = StyleSheet.create({
     answerInput: {
-        backgroundColor: Colors.primary200,
+        backgroundColor: Colors.primary100,
+        borderWidth:1,
+        borderColor: Colors.primary700,
         maxHeight: 250,
         borderRadius: 12,
         marginVertical: 8,

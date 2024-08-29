@@ -1,7 +1,7 @@
 const problemStatus=[
     "primljeno",
     "obradaUToku",
-    "zavrseno",
+    "gotovo",
     "odbijeno"
 ];
 

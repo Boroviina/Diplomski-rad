@@ -1,4 +1,4 @@
-import {View, StyleSheet, Text} from "react-native";
+import {View, StyleSheet, Text, ImageBackground} from "react-native";
 import StartButton from "../components/startScreensComponents/StartButton";
 import {Colors} from "../constants/Colors";
 import {useNavigation} from "@react-navigation/native";
@@ -20,7 +20,11 @@ const StartScreen= () => {
         navigation.navigate('ReviewProblems');
     }
 
-    return <View style={styles.root}>
+    return <ImageBackground
+        source={require( '../assets/backgroundPic.jpg')}
+        style={styles.background}
+    >
+    <View style={styles.root}>
         <View style={styles.titleContainer}>
             <Text style={styles.title}>Jednostavno prijavite Vaš problem.</Text>
         </View>
@@ -36,18 +40,22 @@ const StartScreen= () => {
             </View>
         </View>
     </View>
+    </ImageBackground>
 }
 
 export default StartScreen;
 
 const styles = StyleSheet.create({
+    background:{
+        flex: 1,
+    },
     root: {
         flex: 1,
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         padding: 10,
-        backgroundColor: Colors.primary100
+        backgroundColor: 'rgba(255, 255, 255, 0.6)'
     },
     text: {
         fontSize: 14,

@@ -25,7 +25,7 @@ function LoginScreen() {
                 setCurrentUser(response.user);
                 navigation.navigate('Revision');
             } else {
-                Alert.alert('Login failed', 'Invalid email or password');
+                Alert.alert('Niste se prijavili', 'Provjerite email ili lozinku!');
             }
         } catch (error) {
 
@@ -55,7 +55,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
 
     text: {
-        color: 'white',
+        color: Colors.primary700,
         textAlign: "center",
         fontSize: 24,
         marginBottom: 18,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     textOne: {
-        color: 'white',
+        color: Colors.primary700,
         fontSize: 15,
         marginVertical: 10,
         fontWeight: "bold"

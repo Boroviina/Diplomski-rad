@@ -30,11 +30,21 @@ const AddAddress: FC<props> = ({onConfirm, onBack}) => {
     const [locationPicked, setLocationPicked] = useState(false);
 
 
-
     useEffect(() => {
         setStreet(problem.street || '');
         setLocationDescription(problem.locationDescription || '');
     }, [problem]);
+
+    const setLocation = (lat: number, lng: number) => {
+        const region = {
+            latitude: lat, longitude: lng, latitudeDelta: 0.01,
+            longitudeDelta: 0.01
+        }
+        setProblem({...problem, lat: lat, lng: lng, region: region});
+        setLocationPicked(true);
+    };
+
+    useEffect(()=>{},[locationPicked])
 
     function nextHandler() {
         setProblem({...problem, street: street, locationDescription: locationDescription});
@@ -69,7 +79,7 @@ const AddAddress: FC<props> = ({onConfirm, onBack}) => {
                 <Text style={styles.orText}>ili</Text>
             </View>
             <View style={styles.containerButton}>
-                <LocationPicker showModal={setShowModal}/>
+                <LocationPicker showModal={setShowModal} setLocation={setLocation}/>
             </View>
 
 
@@ -78,7 +88,7 @@ const AddAddress: FC<props> = ({onConfirm, onBack}) => {
                 <LoginButtons onPress={backHandler} children={"Nazad"}/>
             </View>
             {showModal && <Modal visible={showModal}>
-                <Map setShowModal={setShowModal}  locationConfirmed={setLocationPicked}/>
+                <Map setShowModal={setShowModal} locationConfirmed={setLocation}/>
             </Modal>}
         </KeyboardAwareScrollView>
     </Body>
@@ -98,12 +108,12 @@ const styles = StyleSheet.create({
         flexDirection: "column",
 
     },
-    orText:{
+    orText: {
         textAlign: 'center',
         fontSize: 20,
         marginVertical: 5,
         color: Colors.primary700,
-        fontWeight:"bold"
+        fontWeight: "bold"
     },
     contentContainerStyle: {
         flexDirection: "column",

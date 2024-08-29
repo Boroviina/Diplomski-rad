@@ -6,6 +6,7 @@ import {UserModel} from "../../models/user.model";
 import {getUser} from "../user";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {AuthModel} from "../../models/auth.model";
+import Api from "./api-client";
  // import {REACT_APP_API_URL} from '@env';
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -38,6 +39,7 @@ class AuthService {
             return null;
         }
     }
+
 
     //save Token in AsyncStorage
     saveToken(token: string): void {

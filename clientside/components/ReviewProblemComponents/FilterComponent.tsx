@@ -150,7 +150,9 @@ const styles = StyleSheet.create({
         padding: 8,
     },
     inputText: {
-        backgroundColor: Colors.primary200,
+        backgroundColor: Colors.primary100,
+        borderColor: Colors.primary700,
+        borderWidth:1,
         flex: 4,
         height: '100%',
         marginRight: 5,

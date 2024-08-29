@@ -35,8 +35,10 @@ const guestMode=catchAsync(async (req, res)=>{
     res.send(guestToken);
 })
 
+
 module.exports = {
     forgotPassword,
     refreshTokens, logout, login, register,
     guestMode,
+
 }
